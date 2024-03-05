@@ -31,17 +31,18 @@
 <body>
 <div class="container">
     <h1>Ogre Story Generator</h1>
-    <h2>Get Story</h2>
+    <h2>Get baseline story</h2>
     <button id="getStoryButton">Get Ogre Story</button>
-    <div id="storyResult"></div>
+    <div id="storyResult" class="message-container"></div>
     <hr>
     <h2>Generate Custom Story</h2>
     <form id="customStoryForm">
         <label for="prompt">Enter Prompt:</label>
-        <input type="text" id="prompt" name="prompt" required>
+        <input type="text" id="prompt" name="prompt" placeholder="This is where you add additional info for the AI to change your current story..."
+               required>
         <button type="submit">Write Story</button>
     </form>
-    <div id="customStoryResult"></div>
+    <div id="customStoryResult" class="message-container"></div>
 </div>
 
 </body>

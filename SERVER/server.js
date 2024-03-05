@@ -14,29 +14,35 @@ const model = new ChatOpenAI({
     azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
 })
 
+let messages = [
+    ["system", `You are a story telling expert.`],
+    ["human", "Tell me a short story about an ogre"],
+];
+
+
 app.get('/story', async (req, res) => {
     try {
-        const story = await model.invoke("Tell me a short story about an ogre")
-        console.log(story.content)
-        res.send(story.content);
+        const result = await model.invoke(messages); // Stap 1: Stuur de initiële instructies en voorbeeldchat naar OpenAI
+        console.log(result.content);
+        res.send(result.content);
     } catch (error) {
         console.error("error", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 })
-// Route to handle POST requests for motivational responses
+
 app.post('/chat', async(req, res) => {
-    console.log(req.body);
     try {
         const { prompt } = req.body;
-        const response = await model.invoke(prompt);
-        res.json({ message: response.content });
+        messages.push(["human", prompt]); // Stap 2: Voeg het bericht van de gebruiker toe aan de array met berichten
+        const result = await model.invoke(messages); // Stap 2: Stuur de volledige array met berichten naar OpenAI
+        console.log(result.content);
+        res.json({ message: result.content });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
-
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
