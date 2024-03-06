@@ -2,8 +2,8 @@ document.getElementById("getStoryButton").addEventListener("click", async functi
     try {
         const response = await fetch("http://localhost:8000/story");
         const story = await response.text();
-        const aiMessage = `<p><strong>Mighty storyteller:</strong> ${story}</p>`;
-        document.getElementById("storyResult").innerHTML = aiMessage;
+        const aiMessage = `<div class="ai-message"><strong>Mighty storyteller:</strong> ${story}</div>`;
+        appendMessage("storyResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);
     }
@@ -22,10 +22,18 @@ document.getElementById("customStoryForm").addEventListener("submit", async func
             body: JSON.stringify({ prompt })
         });
         const data = await response.json();
-        const userMessage = `<p><strong>You:</strong> ${prompt}</p>`;
-        const aiMessage = `<p><strong>Mighty storyteller:</strong> ${data.message}</p>`;
-        document.getElementById("customStoryResult").innerHTML = userMessage + aiMessage;
+        const userMessage = `<br><div class="user-message"><strong>You:</strong> ${prompt}</div> <br>`;
+        const aiMessage = `<div class="ai-message"><strong>Mighty storyteller:</strong> ${data.message}</div>`;
+        appendMessage("customStoryResult", userMessage);
+        appendMessage("customStoryResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);
     }
 });
+
+function appendMessage(containerId, message) {
+    const container = document.getElementById(containerId);
+    const div = document.createElement("div");
+    div.innerHTML = message;
+    container.appendChild(div);
+}
