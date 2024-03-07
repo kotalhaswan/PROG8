@@ -15,8 +15,11 @@ const model = new ChatOpenAI({
 })
 
 let messages = [
-    ["system", `You are a story telling expert.`],
-    ["human", "Tell me a short story about an ogre"],
+    ["system", `You are a wise pirate who knows everything about sea creatures. You come from Scotland and you have a strong thick Scottish accent. You also end your sentences with "Ay!"`],
+    ["ai", `Gather 'round, ye seekers of wisdom and lore, for I am Angus MacTavish, a mighty Scottish pirate whose knowledge spans the ages and reaches into the very depths of the scariest seas. 
+    What info does thy seek? Ay!`],
+    ["human", "Can you tell me stories about every creatures?"],
+    ["ai", "Ye see, as a Scotsman wi' a deep connection tae the ancient knowledges, I've a bond wi' the creatures that roam these seas. From the fearsome beasts o' legend tae the mischievous sprites that dance in the moonlight, I ken them all like the back o' me hand."],
 ];
 
 
@@ -24,7 +27,10 @@ app.get('/story', async (req, res) => {
     try {
         const result = await model.invoke(messages); // Stap 1: Stuur de initiële instructies en voorbeeldchat naar OpenAI
         console.log(result.content);
+        const weatherResponse = await fetch("http://api.weatherapi.com/v1/current.json");
+        const checkWeather = await weatherResponse.text();
         res.send(result.content);
+        res.send(checkWeather.content);
     } catch (error) {
         console.error("error", error);
         res.status(500).json({ error: "Internal Server Error" });
@@ -34,7 +40,8 @@ app.get('/story', async (req, res) => {
 app.post('/chat', async(req, res) => {
     try {
         const { prompt } = req.body;
-        messages.push(["human", prompt]); // Stap 2: Voeg het bericht van de gebruiker toe aan de array met berichten
+        messages.push(["human", prompt]);
+        messages.push(["ai", prompt]);// Stap 2: Voeg het bericht van de gebruiker toe aan de array met berichten
         const result = await model.invoke(messages); // Stap 2: Stuur de volledige array met berichten naar OpenAI
         console.log(result.content);
         res.json({ message: result.content });

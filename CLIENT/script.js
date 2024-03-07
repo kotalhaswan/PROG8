@@ -1,4 +1,8 @@
 document.getElementById("getStoryButton").addEventListener("click", async function() {
+    // Schakel de knop uit en voeg de klasse toe om grijs te worden
+    this.disabled = true;
+    this.classList.add("disabled");
+
     try {
         const response = await fetch("http://localhost:8000/story");
         const story = await response.text();
@@ -6,6 +10,10 @@ document.getElementById("getStoryButton").addEventListener("click", async functi
         appendMessage("storyResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);
+    } finally {
+        // Schakel de klasse en knop weer in
+        this.disabled = false;
+        this.classList.remove("disabled");
     }
 });
 
@@ -13,6 +21,12 @@ document.getElementById("customStoryForm").addEventListener("submit", async func
     event.preventDefault();
     const promptInput = document.getElementById("prompt");
     const prompt = promptInput.value.trim();
+
+    // Zoek de knop binnen het formulier en schakel deze uit
+    const submitButton = this.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    submitButton.classList.add("disabled");
+
     try {
         const response = await fetch("http://localhost:8000/chat", {
             method: "POST",
@@ -28,6 +42,10 @@ document.getElementById("customStoryForm").addEventListener("submit", async func
         appendMessage("customStoryResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);
+    } finally {
+        // Schakel de klasse en knop weer in
+        submitButton.disabled = false;
+        submitButton.classList.remove("disabled");
     }
 });
 

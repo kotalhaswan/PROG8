@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="script.js" defer></script>
-    <title>Ogre Story Generator</title>
+    <title>Pirate Story Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -26,21 +26,25 @@
             border: none;
             cursor: pointer;
         }
+        button:disabled {
+            background-color: grey;
+        }
+
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>Ogre Story Generator</h1>
-    <h2>Get baseline story</h2>
-    <button id="getStoryButton">Get Ogre Story</button>
+    <h1>Great pirate story Generator</h1>
+    <h2>Wake the pirate up:</h2>
+    <button id="getStoryButton">Wake up, mighty pirate!</button>
     <div id="storyResult" class="message-container"></div>
     <hr>
-    <h2>Generate Custom Story</h2>
+    <h2>Ask the pirate some questions:</h2>
     <form id="customStoryForm">
-        <label for="prompt">Enter Prompt:</label>
-        <input type="text" id="prompt" name="prompt" placeholder="This is where you add additional info for the AI to change your current story..."
+        <label for="prompt">Enter Question:</label>
+        <input type="text" id="prompt" name="prompt" placeholder="This is where you ask the wizard questions..."
                required>
-        <button type="submit">Write Story</button>
+        <button type="submit">Answer my question, oh great one!</button>
     </form>
     <div id="customStoryResult" class="message-container"></div>
 </div>
