@@ -27,7 +27,7 @@ app.get('/story', async (req, res) => {
     try {
         const result = await model.invoke(messages); // Stap 1: Stuur de initiële instructies en voorbeeldchat naar OpenAI
         console.log(result.content);
-        const weatherResponse = await fetch("http://api.weatherapi.com/v1/current.json");
+        const weatherResponse = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
         const checkWeather = await weatherResponse.text();
         res.send(result.content);
         res.send(checkWeather.content);
