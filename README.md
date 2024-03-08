@@ -6,7 +6,19 @@ Bovenaan vind je een knop genaamd "Wake up, mighty pirate!" waar je de eerste Sc
 Happy pirating, yarrrgg!
 
 # Installatie OpenAI:
+
+```
 npm install @openai/api
+npm install @langchain/openai
+```
+
+Om de server te starten:
+```
+cd SERVER
+npm run dev
+```
 
 # Installatie Anthropic TypeScript API Library:
+```
 npm install @anthropic-ai/sdk
+```
