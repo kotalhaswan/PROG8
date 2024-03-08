@@ -37,9 +37,42 @@ document.getElementById("customStoryForm").addEventListener("submit", async func
         });
         const data = await response.json();
         const userMessage = `<br><div class="user-message"><strong>You:</strong> ${prompt}</div> <br>`;
-        const aiMessage = `<div class="ai-message"><strong>Mighty storyteller:</strong> ${data.message}</div>`;
+        const aiMessage = `<div class="ai-message"><strong>Mighty Scottish pirate:</strong> ${data.message}</div>`;
         appendMessage("customStoryResult", userMessage);
         appendMessage("customStoryResult", aiMessage);
+    } catch (error) {
+        console.error("Error:", error);
+    } finally {
+        // Schakel de klasse en knop weer in
+        submitButton.disabled = false;
+        submitButton.classList.remove("disabled");
+    }
+});
+
+// mean pirate post
+document.getElementById("customMeanie").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const promptInput = document.getElementById("promptMean");
+    const prompt = promptInput.value.trim();
+
+    // Zoek de knop binnen het formulier en schakel deze uit
+    const submitButton = this.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    submitButton.classList.add("disabled");
+
+    try {
+        const response = await fetch("http://localhost:8000/mean", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ prompt })
+        });
+        const data = await response.json();
+        const userMessage = `<br><div class="user-message"><strong>You:</strong> ${prompt}</div> <br>`;
+        const aiMessage = `<div class="ai-message"><strong>Mean British pirate:</strong> ${data}</div>`;
+        appendMessage("customMeanResult", userMessage);
+        appendMessage("customMeanResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);
     } finally {

@@ -35,11 +35,11 @@
 <body>
 <div class="container">
     <h1>Great pirate story Generator</h1>
-    <h2>Wake the pirate up:</h2>
+    <h2>Wake the first pirate up:</h2>
     <button id="getStoryButton">Wake up, mighty pirate!</button>
     <div id="storyResult" class="message-container"></div>
-    <hr>
-    <h2>Ask the pirate some questions:</h2>
+
+    <h2>Ask the nice Scottish pirate some questions:</h2>
     <form id="customStoryForm">
         <label for="prompt">Enter Question:</label>
         <input type="text" id="prompt" name="prompt" placeholder="This is where you ask the wizard questions..."
@@ -47,6 +47,15 @@
         <button type="submit">Answer my question, oh great one!</button>
     </form>
     <div id="customStoryResult" class="message-container"></div>
+<br>
+    <h2>Ask the meaner British pirate some questions:</h2>
+    <form id="customMeanie">
+        <label for="prompt">Enter Question:</label>
+        <label for="promptMean"></label><input type="text" id="promptMean" name="promptMean" placeholder="This is where you ask the wizard questions..."
+                                               required>
+        <button type="submit">Answer my question, oh great yet meaner one!</button>
+    </form>
+    <div id="customMeanResult" class="message-container"></div>
 </div>
 
 </body>

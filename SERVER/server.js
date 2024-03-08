@@ -1,6 +1,7 @@
 import { ChatOpenAI } from "@langchain/openai";
 import express from 'express';
 import bodyParser from "body-parser";
+import Anthropic from '@anthropic-ai/sdk';
 import cors from "cors";
 
 const app = express();
@@ -14,6 +15,10 @@ const model = new ChatOpenAI({
     azureOpenAIApiDeploymentName: process.env.ENGINE_NAME,
 })
 
+const anthropic = new Anthropic({
+    apiKey: process.env['ANTHROPIC_API_KEY'], // This is the default and can be omitted
+});
+
 let messages = [
     ["system", `You are a wise pirate who knows everything about sea creatures. You come from Scotland and you have a strong thick Scottish accent. You also end your sentences with "Ay!"`],
     ["ai", `Gather 'round, ye seekers of wisdom and lore, for I am Angus MacTavish, a mighty Scottish pirate whose knowledge spans the ages and reaches into the very depths of the scariest seas. 
@@ -22,6 +27,26 @@ let messages = [
     ["ai", "Ye see, as a Scotsman wi' a deep connection tae the ancient knowledges, I've a bond wi' the creatures that roam these seas. From the fearsome beasts o' legend tae the mischievous sprites that dance in the moonlight, I ken them all like the back o' me hand."],
 ];
 
+
+let meanMessages = [
+];
+app.post('/mean', async (req,res) =>  {
+    //let prompt = req.body.prompt;
+
+    const { prompt } = req.body;
+    meanMessages.push({"role":"user","content": prompt});
+    console.log(meanMessages);
+    const message = await anthropic.messages.create({
+        max_tokens: 300,
+        system: "You are a wise pirate who knows everything about sea creatures, but you are very mean. You insult everyone for no reason. You come from England and you have a strong thick British accent. You also end your sentences with Arg!",
+        messages: meanMessages,
+        model: 'claude-3-opus-20240229',
+    });
+    console.log(message);
+    meanMessages.push({"role": "assistant", "content": message.content[0].text});
+    res.json(message.content[0].text);
+    //console.log(messages);
+})
 
 app.get('/story', async (req, res) => {
     try {
