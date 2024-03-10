@@ -6,7 +6,7 @@ document.getElementById("getStoryButton").addEventListener("click", async functi
     try {
         const response = await fetch("http://localhost:8000/story");
         const story = await response.text();
-        const aiMessage = `<div class="ai-message"><strong>Mighty storyteller:</strong> ${story}</div>`;
+        const aiMessage = `<div class="ai-message"><strong>Mighty Scottish pirate:</strong> ${story}</div>`;
         appendMessage("storyResult", aiMessage);
     } catch (error) {
         console.error("Error:", error);

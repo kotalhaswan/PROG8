@@ -18,9 +18,10 @@ const model = new ChatOpenAI({
 const anthropic = new Anthropic({
     apiKey: process.env['ANTHROPIC_API_KEY'], // This is the default and can be omitted
 });
-
+let cocktailResult = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
 let messages = [
-    ["system", `You are a wise pirate who knows everything about sea creatures. You come from Scotland and you have a strong thick Scottish accent. You also end your sentences with "Ay!"`],
+    ["system", `You are a wise pirate who knows everything about sea creatures. You come from Scotland and you have a strong thick Scottish accent. You also end your sentences with "Ay!
+    You know a very good recipe for a cocktail ${cocktailResult} and when asked you tell the user exactly how to replicate the steps. Don't think up your own info"`],
     ["ai", `Gather 'round, ye seekers of wisdom and lore, for I am Angus MacTavish, a mighty Scottish pirate whose knowledge spans the ages and reaches into the very depths of the scariest seas. 
     What info does thy seek? Ay!`],
     ["human", "Can you tell me stories about every creatures?"],
@@ -52,10 +53,9 @@ app.get('/story', async (req, res) => {
     try {
         const result = await model.invoke(messages); // Stap 1: Stuur de initiële instructies en voorbeeldchat naar OpenAI
         console.log(result.content);
-        const weatherResponse = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php");
-        const checkWeather = await weatherResponse.text();
         res.send(result.content);
-        res.send(checkWeather.content);
+        console.log(cocktailResult);
+
     } catch (error) {
         console.error("error", error);
         res.status(500).json({ error: "Internal Server Error" });
