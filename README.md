@@ -12,7 +12,7 @@ Happy pirating, yarrrgg!
 ```
 npm init
 npm install
-npm install @openai/api
+npm install langchain
 npm install @langchain/openai
 ```
 - In je package.json bestand voeg deze line toe: "dev": "node --env-file=.env --watch server.js"
